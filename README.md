@@ -14,10 +14,26 @@ Após isso execute o comando abaixo para inicializar a aplicaçao na porta 5555:
 mvn spring-boot:run
 ```
 
-#Endpoints
+# Endpoints
+### Auth
+- Para gerar um token:
+```
+Post: localhost:8088/oauth/token
+Headers: 
+    'Authorization: Basic dGVzdGU6cGFzcw==' 
+    'Content-Type: multipart/form-data;
+Body: 
+    'scope=web'
+    'grant_type=password'
+    'username=vini'
+    'password=pass'
+```
+
+### Gerenciador Cadastro API
 - Para criar um novo automovel:
 ```
 Post: localhost:5555/gerenciador-cadastro/automovel
+Headers: 'Authorization: Bearer {access_token gerado no Auth}' 
 Body: {
       	"modeloId" : 1,
       	"valor" : 150000.00
@@ -34,9 +50,11 @@ Get: localhost:5555/gerenciador-cadastro/automovel
 Get: localhost:5555/gerenciador-cadastro/automovel/{id}
 ```
 
+### Gerenciador Pagamento API
 - Para criar um novo boleto:
 ```
 Post: localhost:5555/gerenciador-pagamento/pagamento/boleto
+Headers: 'Authorization: Bearer {access_token gerado no Auth}' 
 Body: {
       	"automovelId" : 1,
       	"valor" : 150000.00,
